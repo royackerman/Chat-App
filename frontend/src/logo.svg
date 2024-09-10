@@ -1,0 +1,11 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="95" fill="#2980b9" stroke="#27ae60" stroke-width="5"/>
+  
+  <!-- Chat Bubble -->
+  <rect x="45" y="60" rx="15" ry="15" width="110" height="60" fill="white" />
+  
+  <!-- Letter A -->
+  <text x="100" y="100" text-anchor="middle" font-family="Arial" font-size="50" fill="#27ae60">A</text>
+</svg>

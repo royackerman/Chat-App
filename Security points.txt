@@ -1,0 +1,9 @@
+1. Prod account was seperated from from Dev/Staging to reduce the attack surface from lower environments on prod.
+2. Internet ingress traffic for customer-exposed environments (Production , Staging , UAT will be through inbound VPC over private link.
+3. CloudFront will be used to provide edge protection , CDN and send traffic to ALB with WAF’s attached to provide application level protection
+4. Lambda@Edge will provide the authentication on CloudFront, to distance away DDOS attacks (and any READ related attacks) from our servers, and increase response time. the full implementation design details is detailed here under the "Pattern 3" section: https://aws.amazon.com/blogs/architecture/web-application-access-control-patterns-using-aws-services/
+
+To enhance the security, ALB can communicate only with CloudFront by using a custom header. The shared value of the custom header can be stored  in AWS Secrets Manager. Secrets Manager will trigger an associated Lambda function to rotate the secret value periodically.
+4. Appropriate WAF rule sets will be configured will be configured on CF and ALB WAF’s. (.e.g ALB: SQL database managed rule group, Linux operating system managed rule group. for CF: AWS WAF Bot Control rule group, etc). WAF protection is required although we block traffic to be forwarded only from the CloudFront because an attacker can still impersonate to a legitimate CF request and perform XSS, SQL Injection, attacks for example.
+5. It is highly suggested to use Organization and AWS Landing Zone to provide separation of management, workloads, logs, security, and networking accounts, what reduces the attack surface, and provide separation of concerns. 
+6. ACM will be used to store and rotate the certificates for the ALBs.
